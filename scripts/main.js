@@ -8,15 +8,17 @@
  * 4. File system module
  *
  * This module contains general document/editing actions and UI
+ * - this is the file system controller
  */
 
-$(function() {
+requirejs(['bitmap', 'bitmapui', 'bitmapcontrollerui', 'localstoragefs'], function (b, bui, bcui, lsfs) {
+
   function Editor() {
 
-    var image = new Bitmap(16, 16);
-    var doc = new BitmapUI(image, $('#bitmap'));
-    var controller = new BitmapControllerUI(doc, $('#controller'));
-    var fs = new LocalStorageFS();
+    var image = new b.Bitmap(16, 16);
+    var doc = new bui.BitmapUI(image, $('#bitmap'));
+    var controller = new bcui.BitmapControllerUI(doc, $('#controller'));
+    var fs = new lsfs.LocalStorageFS("jeremy.editor"); // initialize with namespace
 
     // load a file into the editor (selected from the opener)
     function load(filename) {
@@ -39,4 +41,7 @@ $(function() {
     }
 
   }
+
+  var editor = new Editor();
+
 });
