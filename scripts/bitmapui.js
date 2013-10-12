@@ -5,8 +5,8 @@
  * image
  */
 
-$(function() {
-  function BitmapUI(bitmap, parent) {
+define({
+  BitmapUI: function(bitmap, parent) {
     
     function resize() {
       $canvas.width(width * zoom);
@@ -17,11 +17,18 @@ $(function() {
     function redraw() {
       clear();
       var ary = bitmap.to_array();
-      for(var y = 0; y < bitmap.height()) {
-        for(var x = 0; x < bitmap.width()) {
+      for(var y = 0; y < height; y++) {
+        for(var x = 0; x < width; x++) {
           put_pixel(x, y, ary[y][x]);
         }
       }
+    }
+
+    this.reload = function(new_bitmap) {
+      bitmap = new_bitmap;
+      width = bitmap.width();
+      height = bitmap.height();
+      resize();
     }
 
     function clear() {

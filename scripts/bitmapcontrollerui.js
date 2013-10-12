@@ -4,8 +4,8 @@
  * This module creates and controls the bitmap interactions
  */
 
-$(function() {
-  function BitmapControllerUI(bitmapUI, parent) {
+define({
+  BitmapControllerUI: function(bitmapUI, parent) {
     
   }
 });

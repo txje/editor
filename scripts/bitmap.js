@@ -4,8 +4,13 @@
  * A javascript file-level representation of a bitmap image, in some format
  */
 
-$(function() {
-  function Bitmap(width, height) {
+define({
+  load: function(imageData) {
+    var b = new Bitmap(imageData.width, imageData.height);
+    b.load_data(imageData);
+  },
+
+  Bitmap: function(width, height) {
 
     var headless_canvas = $("<canvas>");
     headless_canvas.attr("width", width);
@@ -14,6 +19,7 @@ $(function() {
     // initialized with invisible black (rgba 0,0,0,0) pixels
     // a 1d array with 4 values (RGBA, 0-255) for each pixel, row-major order
     var imageData = headless_ctx.createImageData(width, height);
+    var pixelData = imageData.data;
 
     this.width = function() {
       return width;
@@ -28,7 +34,7 @@ $(function() {
       for(var y = 0; y < height; y++) {
         data.push([]);
         for(var x = 0; x < width; x++) {
-          data.push([imageData[y*width + x], imageData[y*width + x + 1], imageData[y*width + x + 2], imageData[y*width + x + 3]);
+          data.push([pixelData[y*width + x], pixelData[y*width + x + 1], pixelData[y*width + x + 2], pixelData[y*width + x + 3]);
         }
       }
       return data;
@@ -39,10 +45,19 @@ $(function() {
     //  y: 0-height
     //  color: [R, G, B, A], each 0-255
     this.set_pixel = function(x, y, color) {
-      imageData[y*width + x] = color[0];
-      imageData[y*width + x + 1] = color[1];
-      imageData[y*width + x + 2] = color[2];
-      imageData[y*width + x + 3] = color[3];
+      pixelData[y*width + x] = color[0];
+      pixelData[y*width + x + 1] = color[1];
+      pixelData[y*width + x + 2] = color[2];
+      pixelData[y*width + x + 3] = color[3];
+    }
+
+    this.get_data = function() {
+      return imageData;
+    }
+
+    this.load_data = function(data) {
+      imageData = data;
+      pixelData = imageData.data;
     }
 
     this.export_PNG = function() {
@@ -60,7 +75,8 @@ $(function() {
         headless_canvas.attr("height", img.height);
         headless_ctx.drawImage(img, 0, 0);
         imageData = headless_ctx.getImageData();
+        pixelData = imageData.data;
       }
     }
   }
-}
+});

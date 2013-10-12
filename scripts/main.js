@@ -22,7 +22,8 @@ requirejs(['bitmap', 'bitmapui', 'bitmapcontrollerui', 'localstoragefs'], functi
 
     // load a file into the editor (selected from the opener)
     function load(filename) {
-      image = fs.load(filename); // should create an object of the appropriate type (Bitmap)
+      imagedata = fs.load(filename); // should create an object of the appropriate type (Bitmap)
+      image = new b.load(imagedata);
       doc.reload(image);
     }
 
@@ -32,7 +33,7 @@ requirejs(['bitmap', 'bitmapui', 'bitmapcontrollerui', 'localstoragefs'], functi
     }
 
     function save(filename) {
-      return fs.save(filename, image);
+      return fs.save(filename, image.get_data());
     }
 
     // list files

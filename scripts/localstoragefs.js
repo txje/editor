@@ -4,8 +4,8 @@
  * A filesystem manager based on LocalStorage
  */
 
-$(function() {
-  function LocalStorageFS(namespace) {
+define({
+  LocalStorageFS: function(namespace) {
 
     this.save = function(filename, data) {
       localStorage.setItem(namespace + "." + filename, data);
@@ -25,5 +25,6 @@ $(function() {
     this.load = function(filename) {
       return localStorage.getItem(namespace + "." + filename)
     }
+
   }
-}
+});
