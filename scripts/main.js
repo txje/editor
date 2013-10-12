@@ -17,6 +17,7 @@ requirejs(['bitmap', 'bitmapui', 'bitmapcontrollerui', 'localstoragefs'], functi
 
     var image = new b.Bitmap(16, 16);
     var doc = new bui.BitmapUI(image, $('#bitmap'));
+    doc.zoom(20);
     var controller = new bcui.BitmapControllerUI(doc, $('#controller'));
     var fs = new lsfs.LocalStorageFS("jeremy.editor"); // initialize with namespace
 

@@ -32,10 +32,11 @@ define({
     this.to_array = function() {
       var data = [];
       for(var y = 0; y < height; y++) {
-        data.push([]);
+        var row = [];
         for(var x = 0; x < width; x++) {
-          data.push([pixelData[y*width + x], pixelData[y*width + x + 1], pixelData[y*width + x + 2], pixelData[y*width + x + 3]);
+          row.push([pixelData[y*width + x], pixelData[y*width + x + 1], pixelData[y*width + x + 2], pixelData[y*width + x + 3]]);
         }
+        data.push(row);
       }
       return data;
     }

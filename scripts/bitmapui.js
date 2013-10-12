@@ -9,6 +9,8 @@ define({
   BitmapUI: function(bitmap, parent) {
     
     function resize() {
+      $canvas.attr('width', width * zoom);
+      $canvas.attr('height', height * zoom);
       $canvas.width(width * zoom);
       $canvas.height(height * zoom);
       redraw();
@@ -35,23 +37,25 @@ define({
       ctx.clearRect(0, 0, width*zoom, height*zoom);
     }
 
-    function zoom(new_zoom) {
+    this.zoom = function(new_zoom) {
       zoom = new_zoom;
       resize();
     }
 
     function put_pixel(x, y, color) {
-      ctx.fillStyle = "rgba(" + color[0] + "," + color[1] + "," + color[2] + "," + (color[3]/255) + ")";
-      ctx.fillRect(x*zoom, y*zoom, (x+1)*zoom, (y+1)*zoom);
+      ctx.fillStyle = "rgba(" + color[0] + "," + color[1] + "," + color[2] + "," + color[3] + ")";
+      ctx.fillRect(x*zoom, y*zoom, zoom, zoom);
       bitmap.set_pixel(x, y, color);
     }
 
-    this.set_color(color) {
+    this.set_color = function(color) {
       current_color = color;
     }
 
     function draw_here(e) {
-      put_pixel(e.clientX / zoom, e.clientY / zoom, current_color);
+      var x = e.pageX - $canvas.offset().left;
+      var y = e.pageY - $canvas.offset().top;
+      put_pixel(Math.floor(x / zoom), Math.floor(y / zoom), current_color);
     }
 
 

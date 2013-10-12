@@ -3,10 +3,29 @@
     <link rel="stylesheet" href="incl/bootstrap3/css/bootstrap.min.css"/>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script data-main="scripts/main" src="scripts/require.js"></script>
+    <style>
+      #bitmap {
+        border: 2px solid #000000;
+        display: inline-block;
+        margin: 0px;
+        padding: 0px;
+      }
+    </style>
   </head>
   <body>
+    <div id="filesystem">
+      <div class="input-group" style="width: 400px;">
+        <input type="text" class="form-control"/>
+        <span class="input-group-btn">
+          <a class="btn btn-success">Save</a>
+        </span>
+      </div>
+
+      <p>
+        <a class="btn btn-primary">Open</a>
+      </p>
+    </div>
     <div id="controller"></div>
-    <div id="filesystem"></div>
     <div id="bitmap"></div>
   </body>
 </html>
