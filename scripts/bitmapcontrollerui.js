@@ -48,24 +48,33 @@ define(["../incl/ico.js/ico", "button_set"], function(ico, button_set){
     // ----------------------------------
     // Color
     // ----------------------------------
+
+    function make_spectrum_chooser(parent, onchange) {
+      var chooser = $("<input type='text'/>");
+      var spectrum_params = {
+        showAlpha: true,
+        showPalette: true,
+        localStorageKey: "editor.spectrum", // palette stored locally
+        color: 'rgba(' + chosen_color.join(',') + ')',
+        showButtons: false
+      };
+      if(onchange != null) {
+        spectrum_params["change"] = function(color) {
+          var color = color.toRgb();
+          chosen_color = [color['r'], color['g'], color['b'], color['a']];
+          onchange(chosen_color);
+        }.bind(this);
+      }
+      parent.append(chooser);
+      chooser.spectrum(spectrum_params);
+      return chooser;
+    }
+
     var chosen_color = [0,0,0,255];
-    var color_chooser = $("<input type='text'/>");
-    color_chooser.css("padding", "10px");
-    parent.append(color_chooser);
-    color_chooser.spectrum({
-      showAlpha: true,
-      showPalette: true,
-      localStorageKey: "editor.spectrum", // palette stored locally
-      color: 'rgba(' + chosen_color.join(',') + ')',
-      showButtons: false,
-      change: function(color) {
-        var color = color.toRgb();
-        chosen_color = [color['r'], color['g'], color['b'], color['a']];
-        bitmapUI.set_color(chosen_color);
-      }.bind(this)
+    var color_chooser = make_spectrum_chooser(parent, function(color) {
+      bitmapUI.set_color(chosen_color);
     });
-    color_chooser.width('40px');
-    color_chooser.height('40px');
+    color_chooser.css("padding", "10px");
 
     // ----------------------------------
     // Mode (draw/erase)
@@ -74,23 +83,48 @@ define(["../incl/ico.js/ico", "button_set"], function(ico, button_set){
     var buttons = new button_set.ButtonSet(parent);
     buttons.add('icon-draw', function() {
       bitmapUI.set_color(chosen_color);
+      bitmapUI.set_click('draw');
     });
     buttons.add('icon-erase', function() {
       bitmapUI.set_color([0,0,0,0]);
+      bitmapUI.set_click('draw');
     });
+    parent.append("<br/>");
 
     // ----------------------------------
     // Mode (color-select/dropper)
     // ----------------------------------
 
     buttons.add('icon-dropper', function() {
+      bitmapUI.set_click('pick', function(color) {
+        set_color(color);
+        $('.icon-draw').click();
+      });
     });
+
+    function set_color(color) {
+      var color_string = 'rgba(' + color.join(',') + ')';
+      color_chooser.spectrum("set", color_string);
+    }
 
     // ----------------------------------
     // Mode (fill)
     // ----------------------------------
 
     buttons.add('icon-bucket', function() {
+      bitmapUI.set_click('pour');
+    });
+
+    // ----------------------------------
+    // Mode (color swap)
+    // ----------------------------------
+
+    parent.append("<br/><br/>");
+    var from_color = make_spectrum_chooser(parent);
+    var color_swap = buttons.icon_button(parent, 'icon-swap');
+    color_swap.css("margin", "10px");
+    var to_color = make_spectrum_chooser(parent);
+    color_swap.click(function() {
     });
 
 

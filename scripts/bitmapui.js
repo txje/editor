@@ -53,22 +53,44 @@ define({
       current_color = color;
     }
 
+    function get_image_coords(e) {
+      var x = Math.floor((e.pageX - $canvas.offset().left) / zoom);
+      var y = Math.floor((e.pageY - $canvas.offset().top) / zoom);
+      return [x,y];
+    }
+
     function draw_here(e) {
-      var x = e.pageX - $canvas.offset().left;
-      var y = e.pageY - $canvas.offset().top;
-      put_pixel(Math.floor(x / zoom), Math.floor(y / zoom), current_color);
+      var coords = get_image_coords(e);
+      put_pixel(coords[0], coords[1], current_color);
     }
 
     function get_here(e) {
+      var coords = get_image_coords(e);
+      return bitmap.get_pixel(coords[0], coords[1]);
     }
 
-    function set_click(action) {
+    function pour_here(e) {
+    }
+
+    this.set_click = function(action, callback) {
+      var fn = null;
       if(action == "draw")
-        mouse_callback = draw_here;
+        fn = draw_here;
       else if(action == "pick")
-        mouse_callback = get_here;
+        fn = get_here;
       else if(action == "pour")
-        mouse_callback = pour_here;
+        fn = pour_here;
+
+      if(callback != null) {
+        mouse_callback = function(e) {
+          callback(fn(e));
+        }
+      } else {
+        mouse_callback = fn;
+      }
+    }
+
+    this.swap_colors = function(from, to) {
     }
 
 

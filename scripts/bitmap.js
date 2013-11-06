@@ -54,6 +54,11 @@ define({
       pixelData[offset + 3] = color[3] * 255;
     }
 
+    this.get_pixel = function(x, y) {
+      var offset = (y*width + x) * 4;
+      return [pixelData[offset], pixelData[offset+1], pixelData[offset+2], pixelData[offset+3]];
+    }
+
     this.get_data = function() {
       return imageData;
     }
