@@ -1,3 +1,8 @@
-editor
-
 A modularized online file editing framework, optimized for and including bitmap and vector-based image editors.
+
+
+Requirements:
+
+jQuery
+github.com/txje/ico-js
+github.com/bgrins/spectrum/

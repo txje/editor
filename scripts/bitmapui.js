@@ -43,6 +43,7 @@ define({
     }
 
     function put_pixel(x, y, color) {
+      ctx.clearRect(x*zoom, y*zoom, zoom, zoom);
       ctx.fillStyle = "rgba(" + color[0] + "," + color[1] + "," + color[2] + "," + color[3] + ")";
       ctx.fillRect(x*zoom, y*zoom, zoom, zoom);
       bitmap.set_pixel(x, y, color);
@@ -56,6 +57,18 @@ define({
       var x = e.pageX - $canvas.offset().left;
       var y = e.pageY - $canvas.offset().top;
       put_pixel(Math.floor(x / zoom), Math.floor(y / zoom), current_color);
+    }
+
+    function get_here(e) {
+    }
+
+    function set_click(action) {
+      if(action == "draw")
+        mouse_callback = draw_here;
+      else if(action == "pick")
+        mouse_callback = get_here;
+      else if(action == "pour")
+        mouse_callback = pour_here;
     }
 
 
@@ -73,25 +86,27 @@ define({
     var default_color = [0, 0, 0, 0]; // transparent
     var current_color = [0, 0, 0, 1]; // solid black
 
+    var mouse_callback = draw_here;
+
     $canvas.click(function(e) {
-      draw_here(e);
+      mouse_callback(e);
     }.bind(this));
 
     // drawing while dragging the mouse
     var dragging = false;
-    $canvas.mousedown(function() {
+    $canvas.mousedown(function(e) {
+      e.originalEvent.preventDefault(); // prevent text-selection cursor
       dragging = true;
     }.bind(this));
-    $canvas.mousedown(function() {
+    $canvas.mouseup(function() {
       dragging = false;
     }.bind(this));
     $canvas.mousemove(function(e) {
       if(dragging) {
-        draw_here(e);
+        mouse_callback(e);
       }
     }.bind(this));
 
     resize();
-
   }
 });

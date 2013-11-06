@@ -34,7 +34,8 @@ define({
       for(var y = 0; y < height; y++) {
         var row = [];
         for(var x = 0; x < width; x++) {
-          row.push([pixelData[y*width + x], pixelData[y*width + x + 1], pixelData[y*width + x + 2], pixelData[y*width + x + 3]]);
+          var offset = (y*width + x) * 4;
+          row.push([pixelData[offset], pixelData[offset + 1], pixelData[offset + 2], pixelData[offset + 3]/255]);
         }
         data.push(row);
       }
@@ -46,10 +47,11 @@ define({
     //  y: 0-height
     //  color: [R, G, B, A], each 0-255
     this.set_pixel = function(x, y, color) {
-      pixelData[y*width + x] = color[0];
-      pixelData[y*width + x + 1] = color[1];
-      pixelData[y*width + x + 2] = color[2];
-      pixelData[y*width + x + 3] = color[3];
+      var offset = (y*width + x) * 4;
+      pixelData[offset] = color[0];
+      pixelData[offset + 1] = color[1];
+      pixelData[offset + 2] = color[2];
+      pixelData[offset + 3] = color[3] * 255;
     }
 
     this.get_data = function() {
