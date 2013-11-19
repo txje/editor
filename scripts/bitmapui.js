@@ -26,6 +26,10 @@ define({
       }
     }
 
+    this.get_file_data = function() {
+      return bitmap.get_data();
+    }
+
     this.reload = function(new_bitmap) {
       bitmap = new_bitmap;
       width = bitmap.width();

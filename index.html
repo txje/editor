@@ -2,6 +2,7 @@
   <head>
     <link rel="stylesheet" href="incl/bootstrap3/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="incl/spectrum/spectrum.css"/>
+    <link rel="stylesheet" href="css/main.css"/>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script src="incl/spectrum/spectrum.js"></script>
     <script data-main="scripts/main" src="scripts/require.js"></script>
@@ -122,6 +123,12 @@
     </script> 
   </head>
   <body>
+
+    <div id="file_dialog" class="file_dialog">
+      <div id="file_list" class="file_list"></div>
+      <div id="file_cancel" class="btn btn-warning close-btn">Close</div>
+    </div>
+
     <div class="container">
       <div class="row">
         <div class="col-md-6">
@@ -131,8 +138,8 @@
           </div>
         </div>
         <div class="col-md-6">
-          <a class="btn btn-success">Save</a>
-          <a class="btn btn-primary">Open</a>
+          <a class="btn btn-success" id="save">Save</a>
+          <a class="btn btn-primary" id="open">Open</a>
         </div>
       </div>
       <div class="row">

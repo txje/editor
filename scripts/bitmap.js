@@ -5,11 +5,6 @@
  */
 
 define({
-  load: function(imageData) {
-    var b = new Bitmap(imageData.width, imageData.height);
-    b.load_data(imageData);
-  },
-
   Bitmap: function(width, height) {
 
     var headless_canvas = $("<canvas>");
@@ -60,30 +55,36 @@ define({
     }
 
     this.get_data = function() {
-      return imageData;
+      return {
+        "width": width,
+        "height": height,
+        "src": this.export_PNG()
+      };
     }
 
-    this.load_data = function(data) {
-      imageData = data;
-      pixelData = imageData.data;
+    this.load_data = function(data, callback) {
+      this.import_PNG(data, callback);
     }
 
     this.export_PNG = function() {
-      headless_ctx.putImageData(imageData);
-      return headless_canvas.toDataURL("image/png");
+      headless_ctx.putImageData(imageData, 0, 0);
+      return headless_canvas[0].toDataURL("image/png");
     }
 
     // imports a given PNG by URL
     // automatically resizes the image to match the imported PNG
-    this.import_PNG = function(src) {
+    this.import_PNG = function(src, callback) {
       var img = new Image();
       img.src = src;
       img.onload = function() {
-        headless_canvas.attr("width", img.width);
-        headless_canvas.attr("height", img.height);
+        width = img.width;
+        height = img.height;
+        headless_canvas.attr("width", width);
+        headless_canvas.attr("height", height);
         headless_ctx.drawImage(img, 0, 0);
-        imageData = headless_ctx.getImageData();
+        imageData = headless_ctx.getImageData(0, 0, width, height);
         pixelData = imageData.data;
+        callback();
       }
     }
   }
