@@ -8,10 +8,15 @@ define({
   LocalStorageFS: function(namespace) {
 
     this.save = function(filename, data) {
+      if(typeof data != typeof "string") {
+        data = JSON.stringify(data);
+      }
       localStorage.setItem(namespace + "." + filename, data);
+      return true;
     }
 
     this.open = function(path) {
+      if(path == null) path = "";
       path = namespace + "." + path;
       var files = [];
       for(key in localStorage) {
@@ -23,7 +28,18 @@ define({
     }
 
     this.load = function(filename) {
-      return localStorage.getItem(namespace + "." + filename)
+      var data = localStorage.getItem(namespace + "." + filename);
+      try {
+        data = JSON.parse(data);
+      } catch (e) {
+        // do nothing
+      }
+      return data;
+    }
+
+    this.delete = function(filename) {
+      delete localStorage[namespace + "." + filename];
+      return true; // for localStorage, we'll assume it succeeded
     }
 
   }

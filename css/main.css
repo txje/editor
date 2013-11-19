@@ -1,0 +1,43 @@
+.file_dialog {
+  position: absolute;
+  z-index: 1;
+  right: 0px;
+  left: 0px;
+  top: 0px;
+  bottom: 0px;
+  display: none;
+  width: 600px;
+  height: 400px;
+  margin: auto;
+  border: 2px solid #333333;
+  padding: 10px;
+  background-color: #FFFFFF;
+}
+
+.file_list {
+  scroll: auto;
+}
+
+.close-btn {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+
+.file_entry {
+  cursor: pointer;
+  display: inline-block;
+}
+
+.file_row {
+  width: 100%;
+  background-color: #DDDDDD;
+  padding: 5px;
+  margin: 5px;
+}
+
+.file_delete {
+  cursor: pointer;
+  display: inline-block;
+  float: right;
+}
