@@ -4,5 +4,21 @@ A modularized online file editing framework, optimized for and including bitmap 
 Requirements:
 
 jQuery
+Bootstrap (3+)
 github.com/txje/ico-js
 github.com/bgrins/spectrum/
+
+
+Development roadmap:
+
+Clean up and polish off simple pixel editing
+Implement pour function
+Implement color swap
+Polish off localStorage saving/loading
+  Better filename handling
+  Warn before overwrite
+Add ciphered saving/loading
+Add simple test/code editing
+Add git/Dropbox/HTTP/FTP saving/loading
+Add spreadsheet editor
+Add vector graphics editor (SVG)

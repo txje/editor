@@ -12,14 +12,12 @@ define(["../incl/ico.js/ico", "button_set"], function(ico, button_set){
     // ----------------------------------
     var zoom_control = $("<div>");
     var zoom_less = $("<div>");
-    zoom_less.addClass("icon-zoom-out");
-    zoom_less.addClass("btn");
-    zoom_less.addClass("btn-default");
+    zoom_less.addClass("btn btn-default");
+    zoom_less.append("<div class='icon-zoom-out'></div>");
     zoom_less.css("margin-right", "15px");
     var zoom_more = $("<div>");
-    zoom_more.addClass("icon-zoom-in");
-    zoom_more.addClass("btn");
-    zoom_more.addClass("btn-default");
+    zoom_more.addClass("btn btn-default");
+    zoom_more.append("<div class='icon-zoom-in'></div>");
     zoom_more.css("margin-left", "15px");
     var zoom_value = $("<span>");
     var current_zoom = 1;
