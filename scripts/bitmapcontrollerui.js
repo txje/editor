@@ -93,8 +93,7 @@ define(["button_set"], function(button_set){
     // Mode (color-select/dropper)
     // ----------------------------------
 
-    var pick = buttons.button(parent, '[pick color]');
-    pick.click(function () {
+    buttons.add('[pick color]', function () {
       bitmapUI.set_click('pick', function(color) {
         set_color(color);
       });
