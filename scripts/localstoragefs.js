@@ -16,7 +16,7 @@ define({
     }
 
     this.exists = function(filename) {
-      var files = open();
+      var files = this.open();
       for(var f = 0; f < files.length; f++) {
         if(files[f] == filename) {
           return true;
