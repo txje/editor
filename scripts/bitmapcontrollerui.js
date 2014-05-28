@@ -4,7 +4,7 @@
  * This module creates and controls the bitmap interactions
  */
 
-define(["../incl/ico.js/ico", "button_set"], function(ico, button_set){
+define(["button_set"], function(button_set){
   return { BitmapControllerUI: function(bitmapUI, parent) {
 
     // ----------------------------------
@@ -12,14 +12,12 @@ define(["../incl/ico.js/ico", "button_set"], function(ico, button_set){
     // ----------------------------------
     var zoom_control = $("<div>");
     var zoom_less = $("<div>");
-    zoom_less.addClass("icon-zoom-out");
-    zoom_less.addClass("btn");
-    zoom_less.addClass("btn-default");
+    zoom_less.addClass("btn btn-default");
+    zoom_less.append("<div>[-]</div>");
     zoom_less.css("margin-right", "15px");
     var zoom_more = $("<div>");
-    zoom_more.addClass("icon-zoom-in");
-    zoom_more.addClass("btn");
-    zoom_more.addClass("btn-default");
+    zoom_more.addClass("btn btn-default");
+    zoom_more.append("<div>[+]</div>");
     zoom_more.css("margin-left", "15px");
     var zoom_value = $("<span>");
     var current_zoom = 1;
@@ -81,11 +79,11 @@ define(["../incl/ico.js/ico", "button_set"], function(ico, button_set){
     // ----------------------------------
     parent.append("<br/><br/>");
     var buttons = new button_set.ButtonSet(parent);
-    buttons.add('icon-draw', function() {
+    buttons.add('[draw]', function() {
       bitmapUI.set_color(chosen_color);
       bitmapUI.set_click('draw');
     });
-    buttons.add('icon-erase', function() {
+    buttons.add('[erase]', function() {
       bitmapUI.set_color([0,0,0,0]);
       bitmapUI.set_click('draw');
     });
@@ -95,10 +93,9 @@ define(["../incl/ico.js/ico", "button_set"], function(ico, button_set){
     // Mode (color-select/dropper)
     // ----------------------------------
 
-    buttons.add('icon-dropper', function() {
+    buttons.add('[pick color]', function () {
       bitmapUI.set_click('pick', function(color) {
         set_color(color);
-        $('.icon-draw').click();
       });
     });
 
@@ -111,7 +108,7 @@ define(["../incl/ico.js/ico", "button_set"], function(ico, button_set){
     // Mode (fill)
     // ----------------------------------
 
-    buttons.add('icon-bucket', function() {
+    buttons.add('[pour]', function() {
       bitmapUI.set_click('pour');
     });
 
@@ -121,15 +118,11 @@ define(["../incl/ico.js/ico", "button_set"], function(ico, button_set){
 
     parent.append("<br/><br/>");
     var from_color = make_spectrum_chooser(parent);
-    var color_swap = buttons.icon_button(parent, 'icon-swap');
+    var color_swap = buttons.button(parent, '<-->');
     color_swap.css("margin", "10px");
     var to_color = make_spectrum_chooser(parent);
     color_swap.click(function() {
     });
-
-
-    // run the ico.js generator
-    ico.IconGenerator();
 
   }}
 });
