@@ -3,8 +3,8 @@ define({
   ButtonSet: function(parent) {
     var buttons = [];
 
-    this.add = function(icon_class, callback) {
-      var btn = this.icon_button(parent, icon_class);
+    this.add = function(label, callback) {
+      var btn = this.button(parent, label);
       buttons.push(btn);
 
       btn.click(function() {
@@ -16,9 +16,9 @@ define({
       }.bind(this));
     }
 
-    this.icon_button = function(parent, icon_class) {
+    this.button = function(parent, label) {
       var btn = $("<div>");
-      btn.append("<div class='" + icon_class + "'></div>");
+      btn.append(label);
       btn.addClass("btn");
       btn.addClass("btn-default");
       parent.append(btn);
