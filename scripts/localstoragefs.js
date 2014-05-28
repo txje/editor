@@ -15,6 +15,16 @@ define({
       return true;
     }
 
+    this.exists = function(filename) {
+      var files = open();
+      for(var f = 0; f < files.length; f++) {
+        if(files[f] == filename) {
+          return true;
+        }
+      }
+      return false;
+    }
+
     this.open = function(path) {
       if(path == null) path = "";
       path = namespace + "." + path;

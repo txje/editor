@@ -40,9 +40,16 @@ requirejs(['bitmap', 'bitmapui', 'bitmapcontrollerui', 'localstoragefs'], functi
 
     $('#save').click(function() {
       var filename = $('#filename').val();
-      var data = doc.get_file_data();
-      console.log(data);
-      return fs.save(filename, data);
+      var overwrite = false;
+      if(fs.exists(filename)) {
+        overwrite = confirm("File already exists, overwrite it?");
+      } else {
+        overwrite = true;
+      }
+      if(overwrite) {
+        var data = doc.get_file_data();
+        return fs.save(filename, data);
+      }
     });
 
     // list files
@@ -85,6 +92,11 @@ requirejs(['bitmap', 'bitmapui', 'bitmapcontrollerui', 'localstoragefs'], functi
       cancel.click(function() {
         file_dialog.hide();
       });
+    });
+
+    $("#new").click(function() {
+      var image = new b.Bitmap(16, 16);
+      doc.reload(image);
     });
   }
 
